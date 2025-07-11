@@ -60,7 +60,7 @@ with col3:
 
 col4, col5 = st.columns(2)
 with col4:
-    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["repuesto"].dropna().unique()))
+    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["Repuesto"].dropna().unique()))
 with col5:
     placa = st.selectbox("Placa", ["Todos"] + sorted(df["Placa"].dropna().unique()))
 
@@ -79,9 +79,9 @@ if sucursal != "Todos":
 if grupo != "Todos":
     df_filtered = df_filtered[df_filtered["Grupo de Repuesto"] == grupo]
 if repuesto != "Todos":
-    df_filtered = df_filtered[df_filtered["repuesto"] == repuesto]
-#if placa != "Todos":
-    df_filtered = df_filtered[df_filtered["placa"] == placa]
+    df_filtered = df_filtered[df_filtered["Repuesto"] == repuesto]
+if placa != "Todos":
+    df_filtered = df_filtered[df_filtered["Placa"] == placa]
 
 # Mostrar resultado
 st.markdown("### 🧾 Resultado de Stock")
