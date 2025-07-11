@@ -50,7 +50,7 @@ st.markdown("### 🔎 Filtros")
 col1, col2, col3 = st.columns(3)
 with col1:
     marca = st.selectbox("Marca", ["Todos"] + sorted(df["Marca"].dropna().unique()))
-    tipo = st.selectbox("Tipo de Vehículo", ["Todos"] + sorted(df["Tipo de Vehículo"].dropna().unique()))
+    tipo = st.selectbox("Tipo de Vehículo", ["Todos"] + sorted(df["tipovehiculo"].dropna().unique()))
 with col2:
     modelo = st.selectbox("Modelo", ["Todos"] + sorted(df["Modelo"].dropna().unique()))
     categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["Categoría"].dropna().unique()))
