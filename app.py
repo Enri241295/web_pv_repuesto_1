@@ -1,17 +1,15 @@
 import streamlit as st
 import pandas as pd
 
-# Configurar la página
 st.set_page_config(page_title="Stock de Repuestos", page_icon="📦", layout="wide")
-
 st.title("📦 Stock de Repuestos")
 st.caption("Postventa")
 
-# Cargar data
 @st.cache_data
 def load_data():
     df = pd.read_csv("DATA_PILOTO_PV.csv", sep='|', encoding='utf-8', engine='python', on_bad_lines='skip')
-    # Crear campo FLG_STOCK basado en columnas que contienen 'STOCK'
+    
+    # Crear campo Tiene Stock
     stock_cols = [col for col in df.columns if 'STOCK' in col.upper()]
     df["Tiene Stock"] = df[stock_cols].sum(axis=1).apply(lambda x: "SI" if x > 0 else "NO")
     
@@ -37,9 +35,8 @@ def load_data():
         "repuesto": "Repuesto"
     })
 
-    # Eliminar columnas no requeridas
+    # Eliminar columnas no necesarias
     df = df.drop(columns=["CENTRO", "vehiculo divemotor", "vendido por divemotor"], errors='ignore')
-
     return df
 
 df = load_data()
@@ -50,13 +47,13 @@ st.markdown("### 🔎 Filtros")
 col1, col2, col3 = st.columns(3)
 with col1:
     marca = st.selectbox("Marca", ["Todos"] + sorted(df["Marca"].dropna().unique()))
-    tipo = st.selectbox("Tipo de Vehículo", ["Todos"] + sorted(df["tipovehiculo"].dropna().unique()))
+    tipo = st.selectbox("Tipo de Vehículo", ["Todos"] + sorted(df["Tipo de Vehículo"].dropna().unique()))
 with col2:
     modelo = st.selectbox("Modelo", ["Todos"] + sorted(df["Modelo"].dropna().unique()))
-    categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["seccion rpto"].dropna().unique()))
+    categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["Categoría"].dropna().unique()))
 with col3:
     sucursal = st.selectbox("Sucursal", ["Todos"] + sorted(df["Sucursal"].dropna().unique()))
-    grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["grupo rpto"].dropna().unique()))
+    grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["Grupo de Repuesto"].dropna().unique()))
 
 col4, col5 = st.columns(2)
 with col4:
