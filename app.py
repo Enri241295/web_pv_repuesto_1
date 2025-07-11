@@ -11,19 +11,17 @@ def load_data():
 
 df = load_data()
 
-# Crear FLG_STOCK
-columnas_stock = ['STOCK_IMPORTER', 'STOCK_DEALER', 'STOCK_TOTAL', 'STOCK_GRANDES_CLIENTES', 'STOCK_OTROS_ALMACENES', 'STOCK_TRANSITO_INTERNO']
+# Columnas de stock
+columnas_stock = ['STOCK_IMPORTER', 'STOCK_DEALER', 'STOCK_TOTAL',
+                  'STOCK_GRANDES_CLIENTES', 'STOCK_OTROS_ALMACENES', 'STOCK_TRANSITO_INTERNO']
 
-# Aseguramos que los valores sean numéricos y nulos se traten como 0
+# Asegurar que sean numéricos y rellenar nulos
 df[columnas_stock] = df[columnas_stock].fillna(0).astype(float)
 
 # Crear la columna FLG_STOCK
 df["FLG_STOCK"] = df[columnas_stock].gt(0).any(axis=1).map({True: "SI", False: "NO"})
 
-# Filtrar solo los que tienen stock
-df = df[df["FLG_STOCK"] == "SI"]
-
-# Filtros principales
+# Filtros
 col1, col2, col3 = st.columns(3)
 with col1:
     marca = st.selectbox("Marca", ["Todos"] + sorted(df['marca'].dropna().unique()))
@@ -41,6 +39,9 @@ if modelo != "Todos":
 if tipo != "Todos":
     df_filtered = df_filtered[df_filtered['tipovehiculo'] == tipo]
 
-# Mostrar resultados
-st.subheader("📊 Resultado filtrado (solo si hay stock)")
+# Eliminar columnas de stock
+df_filtered = df_filtered.drop(columns=columnas_stock)
+
+# Mostrar resultado
+#st.subheader("📋 Resultado (FLG_STOCK visible)")
 st.dataframe(df_filtered, use_container_width=True)
