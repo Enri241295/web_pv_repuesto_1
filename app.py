@@ -58,11 +58,11 @@ with col3:
     sucursal = st.selectbox("Sucursal", ["Todos"] + sorted(df["Sucursal"].dropna().unique()))
     grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["grupo rpto"].dropna().unique()))
 
-col4, col5 = st.columns(2)
-with col4:
-    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["Repuesto"].dropna().unique()))
-with col5:
-    placa = st.selectbox("Placa", ["Todos"] + sorted(df["Placa"].dropna().unique()))
+#col4, col5 = st.columns(2)
+#with col4:
+#    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["repuesto"].dropna().unique()))
+#with col5:
+#    placa = st.selectbox("Placa", ["Todos"] + sorted(df["Placa"].dropna().unique()))
 
 # Aplicar filtros
 df_filtered = df.copy()
@@ -78,10 +78,10 @@ if sucursal != "Todos":
     df_filtered = df_filtered[df_filtered["Sucursal"] == sucursal]
 if grupo != "Todos":
     df_filtered = df_filtered[df_filtered["Grupo de Repuesto"] == grupo]
-if repuesto != "Todos":
-    df_filtered = df_filtered[df_filtered["Repuesto"] == repuesto]
-if placa != "Todos":
-    df_filtered = df_filtered[df_filtered["Placa"] == placa]
+#if repuesto != "Todos":
+#    df_filtered = df_filtered[df_filtered["Repuesto"] == repuesto]
+#if placa != "Todos":
+#    df_filtered = df_filtered[df_filtered["Placa"] == placa]
 
 # Mostrar resultado
 st.markdown("### 🧾 Resultado de Stock")
