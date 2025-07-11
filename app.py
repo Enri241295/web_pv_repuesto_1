@@ -1,59 +1,46 @@
 import streamlit as st
 import pandas as pd
 
-# Configurar página
 st.set_page_config(page_title="Stock de Repuestos", layout="wide")
 st.title("📦 Stock de Repuestos")
 st.caption("Postventa")
 
-# Cargar datos
 @st.cache_data
 def load_data():
     return pd.read_csv("DATA_PILOTO_PV.csv", sep='|', encoding='utf-8', engine='python', on_bad_lines='skip')
 
 df = load_data()
 
-# Filtro: Solo repuestos con stock
-df = df[df['Tiene Stock'].str.upper() == "SI"]
+# Crear FLG_STOCK
+columnas_stock = ['STOCK_IMPORTER', 'STOCK_DEALER', 'STOCK_TOTAL', 'STOCK_GRANDES_CLIENTES', 'STOCK_OTROS_ALMACENES', 'STOCK_TRANSITO_INTERNO']
 
-# Crear columnas para filtros
-col1, col2, col3, col4 = st.columns(4)
-col5, col6, col7 = st.columns(3)
+# Aseguramos que los valores sean numéricos y nulos se traten como 0
+df[columnas_stock] = df[columnas_stock].fillna(0).astype(float)
 
+# Crear la columna FLG_STOCK
+df["FLG_STOCK"] = df[columnas_stock].gt(0).any(axis=1).map({True: "SI", False: "NO"})
+
+# Filtrar solo los que tienen stock
+df = df[df["FLG_STOCK"] == "SI"]
+
+# Filtros principales
+col1, col2, col3 = st.columns(3)
 with col1:
-    placa = st.selectbox("Placa", ["All"] + sorted(df['placa'].dropna().unique()), placeholder="Ejm: ABC123")
+    marca = st.selectbox("Marca", ["Todos"] + sorted(df['marca'].dropna().unique()))
 with col2:
-    categoria = st.selectbox("Categoría", ["All"] + sorted(df['categoría'].dropna().unique()))
+    modelo = st.selectbox("Modelo", ["Todos"] + sorted(df['modelo'].dropna().unique()))
 with col3:
-    grupo = st.selectbox("Grupo de Repuesto", ["All"] + sorted(df['grupo de repuesto'].dropna().unique()))
-with col4:
-    sucursal = st.selectbox("Sucursal", ["All"] + sorted(df['sucursal (almacen)'].dropna().unique()))
-with col5:
-    tipo_vehiculo = st.selectbox("Tipo vehículo", ["All"] + sorted(df['tipo de vehículo'].dropna().unique()))
-with col6:
-    marca = st.selectbox("Marca", ["All"] + sorted(df['marca'].dropna().unique()))
-with col7:
-    modelo = st.selectbox("Modelo", ["All"] + sorted(df['modelo'].dropna().unique()))
-with st.expander("🔎 Filtros activos"):
-    st.write("Puedes usar los menús desplegables para filtrar por cada campo.")
+    tipo = st.selectbox("Tipo Vehículo", ["Todos"] + sorted(df['tipovehiculo'].dropna().unique()))
 
-# Aplicar filtros seleccionados
+# Aplicar filtros
 df_filtered = df.copy()
-if placa != "All":
-    df_filtered = df_filtered[df_filtered['placa'] == placa]
-if categoria != "All":
-    df_filtered = df_filtered[df_filtered['categoría'] == categoria]
-if grupo != "All":
-    df_filtered = df_filtered[df_filtered['grupo de repuesto'] == grupo]
-if sucursal != "All":
-    df_filtered = df_filtered[df_filtered['sucursal (almacen)'] == sucursal]
-if tipo_vehiculo != "All":
-    df_filtered = df_filtered[df_filtered['tipo de vehículo'] == tipo_vehiculo]
-if marca != "All":
+if marca != "Todos":
     df_filtered = df_filtered[df_filtered['marca'] == marca]
-if modelo != "All":
+if modelo != "Todos":
     df_filtered = df_filtered[df_filtered['modelo'] == modelo]
+if tipo != "Todos":
+    df_filtered = df_filtered[df_filtered['tipovehiculo'] == tipo]
 
-# Mostrar tabla
-st.subheader("📊 Stock de Repuestos")
+# Mostrar resultados
+st.subheader("📊 Resultado filtrado (solo si hay stock)")
 st.dataframe(df_filtered, use_container_width=True)
