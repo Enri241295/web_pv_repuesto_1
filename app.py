@@ -53,7 +53,7 @@ with col1:
     tipo = st.selectbox("Tipo de Vehículo", ["Todos"] + sorted(df["tipovehiculo"].dropna().unique()))
 with col2:
     modelo = st.selectbox("Modelo", ["Todos"] + sorted(df["Modelo"].dropna().unique()))
-    categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["Categoría"].dropna().unique()))
+    categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["seccion rpto"].dropna().unique()))
 with col3:
     sucursal = st.selectbox("Sucursal", ["Todos"] + sorted(df["Sucursal"].dropna().unique()))
     grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["Grupo de Repuesto"].dropna().unique()))
