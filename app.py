@@ -62,7 +62,7 @@ col4, col5 = st.columns(2)
 with col4:
     repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["repuesto"].dropna().unique()))
 with col5:
-    placa = st.selectbox("Placa", ["Todos"] + sorted(df["placa"].dropna().unique()))
+    placa = st.selectbox("Placa", ["Todos"] + sorted(df["Placa"].dropna().unique()))
 
 # Aplicar filtros
 df_filtered = df.copy()
