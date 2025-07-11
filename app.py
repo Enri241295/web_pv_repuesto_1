@@ -12,14 +12,23 @@ def load_data():
 df = load_data()
 
 # Columnas de stock
-columnas_stock = ['STOCK_IMPORTER', 'STOCK_DEALER', 'STOCK_TOTAL',
-                  'STOCK_GRANDES_CLIENTES', 'STOCK_OTROS_ALMACENES', 'STOCK_TRANSITO_INTERNO']
+columnas_stock = [
+    'STOCK_IMPORTER', 'STOCK_DEALER', 'STOCK_TOTAL',
+    'STOCK_GRANDES_CLIENTES', 'STOCK_OTROS_ALMACENES', 'STOCK_TRANSITO_INTERNO'
+]
 
-# Asegurar que sean numéricos y rellenar nulos
+# Asegurar que los campos de stock sean numéricos
 df[columnas_stock] = df[columnas_stock].fillna(0).astype(float)
 
-# Crear la columna FLG_STOCK
+# Crear campo FLG_STOCK
 df["FLG_STOCK"] = df[columnas_stock].gt(0).any(axis=1).map({True: "SI", False: "NO"})
+
+# Crear campo Sucursal
+df["Sucursal"] = df["CENTRO"].map({3001: "Sucursal Javier Prado", 3101: "Sucursal Canadá"})
+
+# Eliminar columnas innecesarias
+columnas_ocultar = ["CENTRO", "vehiculo divemotor", "vendido por divemotor"]
+df = df.drop(columns=[col for col in columnas_ocultar if col in df.columns])
 
 # Filtros
 col1, col2, col3 = st.columns(3)
@@ -39,9 +48,10 @@ if modelo != "Todos":
 if tipo != "Todos":
     df_filtered = df_filtered[df_filtered['tipovehiculo'] == tipo]
 
-# Eliminar columnas de stock
+# Eliminar columnas de stock (para que no se muestren)
 df_filtered = df_filtered.drop(columns=columnas_stock)
 
-# Mostrar resultado
-#st.subheader("📋 Resultado (FLG_STOCK visible)")
+# Mostrar
+st.subheader("📋 Resultado de Stock")
 st.dataframe(df_filtered, use_container_width=True)
+
