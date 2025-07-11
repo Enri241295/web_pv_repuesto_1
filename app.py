@@ -56,13 +56,13 @@ with col2:
     categoria = st.selectbox("Categoría", ["Todos"] + sorted(df["seccion rpto"].dropna().unique()))
 with col3:
     sucursal = st.selectbox("Sucursal", ["Todos"] + sorted(df["Sucursal"].dropna().unique()))
-    grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["Grupo de Repuesto"].dropna().unique()))
+    grupo = st.selectbox("Grupo de Repuesto", ["Todos"] + sorted(df["grupo rpto"].dropna().unique()))
 
 col4, col5 = st.columns(2)
 with col4:
-    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["Repuesto"].dropna().unique()))
+    repuesto = st.selectbox("Repuesto", ["Todos"] + sorted(df["repuesto"].dropna().unique()))
 with col5:
-    placa = st.selectbox("Placa", ["Todos"] + sorted(df["Placa"].dropna().unique()))
+    placa = st.selectbox("Placa", ["Todos"] + sorted(df["placa"].dropna().unique()))
 
 # Aplicar filtros
 df_filtered = df.copy()
