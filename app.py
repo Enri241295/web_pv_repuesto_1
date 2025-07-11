@@ -3,7 +3,7 @@ import pandas as pd
 
 @st.cache_data
 def load_data():
-    return pd.read_csv("DATA_PILOTO_PV.csv", sep='|', encoding='utf-8', engine='python', on_bad_lines='skip'
+    return pd.read_csv("DATA_PILOTO_PV.csv", sep='|', encoding='utf-8', engine='python', on_bad_lines='skip')
 
 
 df = load_data()
