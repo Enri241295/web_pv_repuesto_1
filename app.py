@@ -73,7 +73,7 @@ if tipo != "Todos":
 if modelo != "Todos":
     df_filtered = df_filtered[df_filtered["Modelo"] == modelo]
 if categoria != "Todos":
-    df_filtered = df_filtered[df_filtered["Categoría"] == categoria]
+    df_filtered = df_filtered[df_filtered["seccion rpto"] == categoria]
 if sucursal != "Todos":
     df_filtered = df_filtered[df_filtered["Sucursal"] == sucursal]
 if grupo != "Todos":
