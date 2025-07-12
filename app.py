@@ -85,10 +85,19 @@ if placa != "Todos":
  
 # Mostrar resultado
 st.markdown("### 🧾 Resultado de Stock")
+
 columnas_finales = [
     "Cliente", "Chasis", "Placa", "Año de fabricación", "Familia",
     "Tipo de Vehículo", "Marca", "Modelo", "Categoría", "Grupo de Repuesto",
     "Sucursal", "Cod. Repuesto", "Repuesto", "Tiene Stock"
 ]
-st.dataframe(df_filtered[columnas_finales], use_container_width=True)
+
+# Filtrar solo columnas que existen en el dataframe
+columnas_existentes = [col for col in columnas_finales if col in df_filtered.columns]
+
+# Mostrar DataFrame con columnas válidas
+if columnas_existentes:
+    st.dataframe(df_filtered[columnas_existentes], use_container_width=True)
+else:
+    st.warning("No se encontraron las columnas necesarias para mostrar el resultado.")
  
