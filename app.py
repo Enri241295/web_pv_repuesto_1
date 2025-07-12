@@ -77,7 +77,7 @@ if categoria != "Todos":
 if sucursal != "Todos":
     df_filtered = df_filtered[df_filtered["Sucursal"] == sucursal]
 if grupo != "Todos":
-    df_filtered = df_filtered[df_filtered["Grupo de Repuesto"] == grupo]
+    df_filtered = df_filtered[df_filtered["grupo rpto"] == grupo]
 if repuesto != "Todos":
     df_filtered = df_filtered[df_filtered["Repuesto"] == repuesto]
 if placa != "Todos":
